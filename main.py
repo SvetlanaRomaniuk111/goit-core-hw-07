@@ -67,7 +67,7 @@ class Record:
     def __str__(self) -> str:
         phones = "; ".join(p.value for p in self.phones)
         birthday = (
-            f", birthday: {self.birthday.value.strftime('%d.%m.%Y')}"
+            f", birthday: {self.birthday.value}"
             if self.birthday
             else ""
         )
@@ -89,11 +89,26 @@ class AddressBook(UserDict):
     def date_to_string(date: datetime):
         return date.strftime("%d.%m.%Y")
 
+    @staticmethod
+    def find_next_weekday(start_date: datetime, weekday: int) -> datetime:
+        days_ahead = weekday - start_date.weekday()
+
+        if days_ahead <= 0:
+            days_ahead += 7
+
+        return start_date + timedelta(days=days_ahead)
+
     @classmethod
     def adjust_for_weekend(cls, birthday: datetime) -> datetime:
         if birthday.weekday() >= 5:
-            return birthday + timedelta(days=(7 - birthday.weekday()))
+            return cls.find_next_weekday(birthday, 0)
         return birthday
+
+    # @classmethod
+    # def adjust_for_weekend(cls, birthday: datetime) -> datetime:
+    #     if birthday.weekday() >= 5:
+    #         return birthday + timedelta(days=(7 - birthday.weekday()))
+    #     return birthday
 
     def get_upcoming_birthdays(self, days: int = 7):
         upcoming_birthdays = []
