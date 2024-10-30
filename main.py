@@ -224,7 +224,7 @@ def show_birthday(args: list[str], book: AddressBook) -> str:
     name = args[0]
     record = book.find(name)
     if record and record.birthday:
-        return f"{name}'s birthday: {record.birthday.value.strftime('%d.%m.%Y')}"
+        return f"{name}'s birthday: {record.birthday.value}"
     return "Birthday not found"
 
 
