@@ -147,7 +147,7 @@ def parse_input(user_input):
 
 
 @input_error
-def add_contact(args, book: AddressBook):
+def add_contact(args: list[str], book: AddressBook) -> str:
     if len(args) < 2:
         raise ValueError("Please provide both a name and a phone number.")
 
@@ -166,6 +166,9 @@ def add_contact(args, book: AddressBook):
 
 @input_error
 def change_contact(args: list[str], book: AddressBook) -> str:
+    if len(args) < 3:
+        raise ValueError("Please provide your name, old and new phone numbers.")
+
     name, old_phone, new_phone = args
     record = book.find(name)
     if not record:
@@ -189,6 +192,9 @@ def show_all(book: AddressBook) -> str:
 
 @input_error
 def add_birthday(args: list[str], book: AddressBook) -> str:
+    if len(args) < 2:
+        raise ValueError("Please provide both a name and birthday date.")
+
     name, birthday = args
     record = book.find(name)
     if not record:
