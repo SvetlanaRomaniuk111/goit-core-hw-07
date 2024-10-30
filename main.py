@@ -101,7 +101,8 @@ class AddressBook(UserDict):
 
         for record in self.data.values():
             if record.birthday:  # Перевірка наявності дня народження
-                birthday_this_year = record.birthday.value.replace(year=today.year)
+                birthday_date = datetime.strptime(record.birthday.value, "%d.%m.%Y").date()
+                birthday_this_year = birthday_date.replace(year=today.year)
 
                 # Оновлюємо рік, якщо день народження вже був цього року
                 if birthday_this_year < today:
