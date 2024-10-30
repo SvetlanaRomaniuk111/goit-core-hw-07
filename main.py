@@ -33,7 +33,7 @@ class Birthday(Field):
                     "The date of birth cannot be greater than the current one."
                 )
 
-            self.value = birthday
+            self.value = birthday.strftime("%d.%m.%Y")
 
         except ValueError as e:
             raise ValueError(f"Invalid date: {e}. Use DD.MM.YYYY")
