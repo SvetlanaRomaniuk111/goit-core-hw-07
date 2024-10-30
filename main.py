@@ -66,11 +66,7 @@ class Record:
 
     def __str__(self) -> str:
         phones = "; ".join(p.value for p in self.phones)
-        birthday = (
-            f", birthday: {self.birthday.value}"
-            if self.birthday
-            else ""
-        )
+        birthday = f", birthday: {self.birthday.value}" if self.birthday else ""
         return f"Contact name: {self.name.value}, phones: {phones}{birthday}"
 
 
@@ -104,19 +100,15 @@ class AddressBook(UserDict):
             return cls.find_next_weekday(birthday, 0)
         return birthday
 
-    # @classmethod
-    # def adjust_for_weekend(cls, birthday: datetime) -> datetime:
-    #     if birthday.weekday() >= 5:
-    #         return birthday + timedelta(days=(7 - birthday.weekday()))
-    #     return birthday
-
     def get_upcoming_birthdays(self, days: int = 7):
         upcoming_birthdays = []
         today = date.today()  # Зміна на date.today() для узгодження типу
 
         for record in self.data.values():
             if record.birthday:  # Перевірка наявності дня народження
-                birthday_date = datetime.strptime(record.birthday.value, "%d.%m.%Y").date()
+                birthday_date = datetime.strptime(
+                    record.birthday.value, "%d.%m.%Y"
+                ).date()
                 birthday_this_year = birthday_date.replace(year=today.year)
 
                 # Оновлюємо рік, якщо день народження вже був цього року
